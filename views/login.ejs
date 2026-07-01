@@ -1,61 +1,236 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - CRUD Pegawai</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — CRUD Pegawai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <style>
-    body { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; display: flex; align-items: center; }
-    .card { border: none; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-    .card-header { background: linear-gradient(135deg, #1e3c72, #2a5298); border-radius: 16px 16px 0 0 !important; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:       #faf8f5;
+      --cream-dark:  #f5f0e8;
+      --terracotta:  #c0622f;
+      --terra-dark:  #a3521f;
+      --warm-brown:  #8b4513;
+      --sage:        #6b7c5c;
+      --text-dark:   #2c2418;
+      --text-mid:    #5a4a38;
+      --text-light:  #9c8878;
+      --border:      #e8dfd4;
+      --shadow:      rgba(139,69,19,0.08);
+      --shadow-md:   rgba(139,69,19,0.14);
+      --white:       #ffffff;
+      --radius:      12px;
+      --radius-sm:   8px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .auth-wrapper {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .brand-mark {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .brand-mark .icon-ring {
+      width: 60px;
+      height: 60px;
+      background: var(--terracotta);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .brand-mark .icon-ring i {
+      font-size: 26px;
+      color: var(--white);
+    }
+
+    .brand-mark h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark p {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 24px var(--shadow);
+      padding: 36px 32px;
+    }
+
+    .alert-error {
+      background: #fdf0eb;
+      border: 1px solid #f0c4ae;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      margin-bottom: 22px;
+      font-size: 0.875rem;
+      color: var(--terracotta);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      margin-bottom: 7px;
+      letter-spacing: 0.01em;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap i {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 11px 14px 11px 38px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--terracotta);
+      box-shadow: 0 0 0 3px rgba(192,98,47,0.12);
+      background: var(--white);
+    }
+
+    input::placeholder { color: var(--text-light); }
+
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      background: var(--terracotta);
+      color: var(--white);
+      border: none;
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      margin-top: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--terra-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(192,98,47,0.25);
+    }
+
+    .btn-primary:active { transform: translateY(0); }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+
+    .auth-footer a {
+      color: var(--terracotta);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .auth-footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-5 col-lg-4">
-        <div class="card">
-          <div class="card-header text-center py-4">
-            <i class="bi bi-people-fill text-white fs-1"></i>
-            <h4 class="text-white mt-2 mb-0">CRUD Pegawai</h4>
-          </div>
-          <div class="card-body p-4">
-            <h5 class="text-center text-muted mb-4">Masuk ke Akun</h5>
-            <% if (error) { %>
-              <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-circle me-2"></i><%= error %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-              </div>
-            <% } %>
-            <form action="/login" method="POST">
-              <div class="mb-3">
-                <label class="form-label fw-semibold">Username</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="bi bi-person"></i></span>
-                  <input type="text" name="username" class="form-control" placeholder="Masukkan username" required autofocus>
-                </div>
-              </div>
-              <div class="mb-4">
-                <label class="form-label fw-semibold">Password</label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                  <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
-                <i class="bi bi-box-arrow-in-right me-2"></i>Login
-              </button>
-            </form>
-          </div>
-          <div class="card-footer text-center py-3 bg-light">
-            <small>Belum punya akun? <a href="/register" class="text-decoration-none fw-semibold">Daftar di sini</a></small>
+  <div class="auth-wrapper">
+    <div class="brand-mark">
+      <div class="icon-ring"><i class="bi bi-people-fill"></i></div>
+      <h1>CRUD Pegawai</h1>
+      <p>Selamat datang kembali</p>
+    </div>
+
+    <div class="card">
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert-error">
+          <i class="bi bi-exclamation-circle-fill"></i>
+          <%= error %>
+        </div>
+      <% } %>
+
+      <form action="/login" method="POST">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <div class="input-wrap">
+            <i class="bi bi-person"></i>
+            <input type="text" id="username" name="username" placeholder="Masukkan username" required autocomplete="username" />
           </div>
         </div>
-      </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <i class="bi bi-lock"></i>
+            <input type="password" id="password" name="password" placeholder="Masukkan password" required autocomplete="current-password" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          <i class="bi bi-box-arrow-in-right"></i> Masuk
+        </button>
+      </form>
+    </div>
+
+    <div class="auth-footer">
+      Belum punya akun? <a href="/register">Daftar sekarang</a>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
