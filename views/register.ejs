@@ -3,381 +3,369 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register — StellarHR</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Register — PegawaiHub</title>
+  <meta name="description" content="Create a PegawaiHub account to start managing your team with precision." />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --success: #16a34a;
+      --danger: #dc2626;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --purple: #a855f7;
-      --purple-dark: #7c3aed;
-      --teal: #06b6d4;
-      --teal-dark: #0891b2;
-      --bg1: #0a0a1a;
-      --bg2: #1a0533;
-      --bg3: #0d1b2a;
-      --glass-bg: rgba(255,255,255,0.05);
-      --glass-border: rgba(255,255,255,0.10);
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
-      --error: #f87171;
-    }
-
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
-      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── Left Panel ── */
+    .left-panel {
+      background: var(--text);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: -15%;
-      right: -10%;
-      width: 550px;
-      height: 550px;
-      background: radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: floatOrb 9s ease-in-out infinite;
-      pointer-events: none;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: -15%;
-      left: -10%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(168,85,247,0.14) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: floatOrb 11s ease-in-out infinite reverse;
-      pointer-events: none;
-    }
-    @keyframes floatOrb {
-      0%, 100% { transform: translate(0,0) scale(1); }
-      33% { transform: translate(-25px, 20px) scale(1.04); }
-      66% { transform: translate(20px, -25px) scale(0.96); }
-    }
-
-    .particles { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
-    .particle {
-      position: absolute; width: 2px; height: 2px;
-      border-radius: 50%; animation: particleFloat linear infinite; opacity: 0;
-    }
-    @keyframes particleFloat {
-      0% { transform: translateY(100vh) scale(0); opacity: 0; }
-      10% { opacity: 0.6; } 90% { opacity: 0.6; }
-      100% { transform: translateY(-100px) scale(1); opacity: 0; }
-    }
-
-    .register-wrapper {
-      width: 100%;
-      max-width: 480px;
-      position: relative;
-      z-index: 10;
-    }
-
-    .brand {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .brand-icon {
-      width: 60px; height: 60px;
-      background: linear-gradient(135deg, var(--teal-dark), var(--teal));
-      border-radius: 16px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      color: #fff;
-      margin-bottom: 0.875rem;
-      box-shadow: 0 0 30px rgba(6,182,212,0.5), 0 0 60px rgba(6,182,212,0.2);
-      animation: pulseTeal 3s ease-in-out infinite;
-    }
-    @keyframes pulseTeal {
-      0%, 100% { box-shadow: 0 0 30px rgba(6,182,212,0.5), 0 0 60px rgba(6,182,212,0.2); }
-      50% { box-shadow: 0 0 40px rgba(6,182,212,0.8), 0 0 80px rgba(6,182,212,0.3), 0 0 120px rgba(168,85,247,0.1); }
-    }
-    .brand h1 {
-      font-size: 1.65rem; font-weight: 800;
-      background: linear-gradient(90deg, var(--teal), var(--purple));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      letter-spacing: -0.02em;
-    }
-    .brand p { color: var(--text-muted); font-size: 0.875rem; margin-top: 0.25rem; }
-
-    .glass-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      padding: 2.5rem;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 56px 56px 48px;
       position: relative;
       overflow: hidden;
     }
-    .glass-card::before {
+
+    .left-panel::before {
       content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(6,182,212,0.5), rgba(168,85,247,0.5), transparent);
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 320px;
+      height: 320px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 50%;
     }
 
-    .card-title { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; }
-    .card-subtitle { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 2rem; }
-
-    .alert-error {
-      background: rgba(248,113,113,0.1);
-      border: 1px solid rgba(248,113,113,0.3);
-      border-radius: 12px;
-      padding: 0.75rem 1rem;
-      color: var(--error);
-      font-size: 0.875rem;
-      display: flex; align-items: center; gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      animation: slideIn 0.3s ease;
-    }
-    @keyframes slideIn {
-      from { transform: translateY(-8px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    .left-panel::after {
+      content: '';
+      position: absolute;
+      bottom: 60px;
+      left: -60px;
+      width: 200px;
+      height: 200px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 50%;
     }
 
-    .form-group { margin-bottom: 1.25rem; }
-    .form-label {
-      display: block; font-size: 0.8rem; font-weight: 600;
-      color: var(--text-secondary); margin-bottom: 0.5rem;
-      letter-spacing: 0.05em; text-transform: uppercase;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 1;
     }
-    .input-wrapper { position: relative; }
-    .input-icon {
-      position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
-      color: var(--text-muted); font-size: 1rem;
-      transition: color 0.3s; pointer-events: none;
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.1rem;
     }
+
+    .brand-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .left-content {
+      z-index: 1;
+    }
+
+    .left-content .tagline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      margin-bottom: 20px;
+    }
+
+    .left-content .tagline span {
+      color: var(--accent);
+    }
+
+    .left-content .sub {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+      max-width: 300px;
+    }
+
+    .feature-list {
+      z-index: 1;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .feature-list li i {
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    /* ── Right Panel ── */
+    .right-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 56px;
+      background: var(--bg);
+    }
+
+    .register-card {
+      width: 100%;
+      max-width: 420px;
+      animation: slideUp 0.5s ease both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .register-card .card-header {
+      margin-bottom: 36px;
+    }
+
+    .register-card .card-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .register-card .card-header p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      pointer-events: none;
+    }
+
     .form-control {
       width: 100%;
-      padding: 0.875rem 1rem 0.875rem 2.75rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      color: var(--text-primary);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
+      padding: 12px 14px 12px 40px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--bg);
       outline: none;
-      transition: all 0.3s ease;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .form-control::placeholder { color: var(--text-muted); }
+
     .form-control:focus {
-      border-color: var(--teal);
-      background: rgba(6,182,212,0.05);
-      box-shadow: 0 0 0 3px rgba(6,182,212,0.15), 0 0 20px rgba(6,182,212,0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
     }
-    .input-wrapper:focus-within .input-icon { color: var(--teal); }
 
-    .toggle-password {
-      position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
-      background: none; border: none; color: var(--text-muted);
-      cursor: pointer; padding: 0; font-size: 1rem; transition: color 0.3s; line-height: 1;
+    .alert-error {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 6px;
+      color: var(--danger);
+      font-size: 0.88rem;
+      margin-bottom: 24px;
     }
-    .toggle-password:hover { color: var(--teal); }
-
-    .password-strength {
-      margin-top: 0.5rem;
-      display: flex; gap: 4px;
-    }
-    .strength-bar {
-      flex: 1; height: 3px; border-radius: 2px;
-      background: rgba(255,255,255,0.1);
-      transition: background 0.3s;
-    }
-    .strength-bar.weak { background: #f87171; }
-    .strength-bar.medium { background: #fbbf24; }
-    .strength-bar.strong { background: var(--success, #34d399); }
-
-    .strength-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem; }
 
     .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       width: 100%;
-      padding: 0.9rem;
-      background: linear-gradient(135deg, var(--teal-dark), var(--teal));
-      border: none; border-radius: 12px;
-      color: #fff; font-family: 'Inter', sans-serif;
-      font-size: 0.95rem; font-weight: 600; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(6,182,212,0.4);
-      letter-spacing: 0.01em; margin-top: 1.5rem;
+      padding: 13px 24px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 8px;
     }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(6,182,212,0.6), 0 0 60px rgba(6,182,212,0.2);
-      background: linear-gradient(135deg, var(--teal), #38bdf8);
-    }
+
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
     .btn-primary:active { transform: translateY(0); }
 
-    .divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; }
-    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--glass-border); }
-    .divider span { color: var(--text-muted); font-size: 0.75rem; white-space: nowrap; }
+    .card-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
 
-    .link-secondary { text-align: center; font-size: 0.875rem; color: var(--text-muted); }
-    .link-secondary a { color: var(--purple); text-decoration: none; font-weight: 600; transition: color 0.2s; }
-    .link-secondary a:hover { color: #c084fc; text-shadow: 0 0 10px rgba(168,85,247,0.5); }
+    .card-footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+    }
 
-    @media (max-width: 480px) {
-      .glass-card { padding: 2rem 1.5rem; border-radius: 20px; }
+    .card-footer a::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .card-footer a:hover::after { width: 100%; }
+
+    @media (max-width: 768px) {
+      body { grid-template-columns: 1fr; }
+      .left-panel { display: none; }
+      .right-panel { padding: 40px 24px; }
     }
   </style>
 </head>
 <body>
-  <div class="particles" id="particles"></div>
 
-  <div class="register-wrapper">
+  <!-- Left Panel -->
+  <div class="left-panel">
     <div class="brand">
-      <div class="brand-icon"><i class="bi bi-person-plus-fill"></i></div>
-      <h1>StellarHR</h1>
-      <p>Create your account to get started</p>
+      <div class="brand-icon"><i class="bi bi-people-fill"></i></div>
+      <span class="brand-name">PegawaiHub</span>
     </div>
+    <div class="left-content">
+      <h2 class="tagline">Join the<br/><span>Hub.</span></h2>
+      <p class="sub">Create your account and start managing your organization with Swiss-precision editorial clarity.</p>
+    </div>
+    <ul class="feature-list">
+      <li><i class="bi bi-check-circle-fill"></i> Centralized employee records</li>
+      <li><i class="bi bi-check-circle-fill"></i> Real-time salary tracking</li>
+      <li><i class="bi bi-check-circle-fill"></i> Audit-ready data management</li>
+      <li><i class="bi bi-check-circle-fill"></i> Role-based access control</li>
+    </ul>
+  </div>
 
-    <div class="glass-card">
-      <div class="card-title">Create Account</div>
-      <div class="card-subtitle">Fill in the details below to register</div>
-
-      <% if (typeof error !== 'undefined' && error) { %>
-      <div class="alert-error">
-        <i class="bi bi-exclamation-circle-fill"></i>
-        <span><%= error %></span>
+  <!-- Right Panel -->
+  <div class="right-panel">
+    <div class="register-card">
+      <div class="card-header">
+        <h1>Create account</h1>
+        <p>Join PegawaiHub — free forever for small teams</p>
       </div>
+      <div class="divider"></div>
+
+      <% if (error) { %>
+        <div class="alert-error">
+          <i class="bi bi-exclamation-circle-fill"></i>
+          <%= error %>
+        </div>
       <% } %>
 
-      <form action="/register" method="POST" autocomplete="off" id="registerForm">
+      <form action="/register" method="POST">
         <div class="form-group">
-          <label class="form-label" for="username">Username</label>
-          <div class="input-wrapper">
-            <i class="bi bi-person input-icon"></i>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              class="form-control"
-              placeholder="Choose a username"
-              required
-              autocomplete="username"
-            />
+          <label for="username">Username</label>
+          <div class="input-wrap">
+            <i class="bi bi-person"></i>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Choose a username" required autocomplete="username" />
           </div>
         </div>
-
         <div class="form-group">
-          <label class="form-label" for="password">Password</label>
-          <div class="input-wrapper">
-            <i class="bi bi-lock input-icon"></i>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              class="form-control"
-              placeholder="Create a strong password"
-              required
-              autocomplete="new-password"
-              id="pwdInput"
-            />
-            <button type="button" class="toggle-password" id="togglePwd1" aria-label="Toggle password">
-              <i class="bi bi-eye" id="eye1"></i>
-            </button>
-          </div>
-          <div class="password-strength" id="strengthBars">
-            <div class="strength-bar" id="bar1"></div>
-            <div class="strength-bar" id="bar2"></div>
-            <div class="strength-bar" id="bar3"></div>
-            <div class="strength-bar" id="bar4"></div>
-          </div>
-          <div class="strength-label" id="strengthLabel"></div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="confirm_password">Confirm Password</label>
-          <div class="input-wrapper">
-            <i class="bi bi-shield-lock input-icon"></i>
-            <input
-              type="password"
-              id="confirm_password"
-              name="confirm_password"
-              class="form-control"
-              placeholder="Re-enter your password"
-              required
-              autocomplete="new-password"
-            />
-            <button type="button" class="toggle-password" id="togglePwd2" aria-label="Toggle confirm password">
-              <i class="bi bi-eye" id="eye2"></i>
-            </button>
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <i class="bi bi-lock"></i>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" required autocomplete="new-password" />
           </div>
         </div>
-
-        <button type="submit" class="btn-primary" id="registerBtn">
-          <i class="bi bi-person-check-fill"></i>
+        <div class="form-group">
+          <label for="confirm_password">Confirm Password</label>
+          <div class="input-wrap">
+            <i class="bi bi-shield-lock"></i>
+            <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Repeat your password" required autocomplete="new-password" />
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">
+          <i class="bi bi-person-plus-fill"></i>
           Create Account
         </button>
       </form>
 
-      <div class="divider"><span>Already have an account?</span></div>
-      <div class="link-secondary">
-        <a href="/login"><i class="bi bi-box-arrow-in-right"></i> Sign in instead</a>
+      <div class="card-footer">
+        Already have an account? <a href="/login">Sign in</a>
       </div>
     </div>
   </div>
 
-  <script>
-    // Toggle passwords
-    function setupToggle(btnId, inputId, iconId) {
-      document.getElementById(btnId).addEventListener('click', () => {
-        const inp = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
-        inp.type = inp.type === 'password' ? 'text' : 'password';
-        icon.className = inp.type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
-      });
-    }
-    setupToggle('togglePwd1', 'password', 'eye1');
-    setupToggle('togglePwd2', 'confirm_password', 'eye2');
-
-    // Password strength
-    const pwdInput = document.getElementById('password');
-    const bars = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3'), document.getElementById('bar4')];
-    const label = document.getElementById('strengthLabel');
-    pwdInput.addEventListener('input', () => {
-      const v = pwdInput.value;
-      let score = 0;
-      if (v.length >= 8) score++;
-      if (/[A-Z]/.test(v)) score++;
-      if (/[0-9]/.test(v)) score++;
-      if (/[^A-Za-z0-9]/.test(v)) score++;
-      bars.forEach((b, i) => {
-        b.className = 'strength-bar';
-        if (i < score) b.classList.add(score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong');
-      });
-      label.textContent = score === 0 ? '' : score <= 1 ? 'Weak' : score <= 2 ? 'Fair' : score === 3 ? 'Good' : 'Strong';
-    });
-
-    // Particles
-    const container = document.getElementById('particles');
-    for (let i = 0; i < 30; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      p.style.left = Math.random() * 100 + 'vw';
-      p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
-      p.style.background = i % 2 === 0 ? '#a855f7' : '#06b6d4';
-      p.style.animationDuration = (Math.random() * 15 + 8) + 's';
-      p.style.animationDelay = (Math.random() * 10) + 's';
-      container.appendChild(p);
-    }
-  </script>
 </body>
 </html>

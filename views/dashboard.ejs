@@ -1,442 +1,414 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard — StellarHR</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <title>HanamHR — Dashboard</title>
+  <meta name="description" content="HanamHR dashboard — overview of your employee directory." />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
   <style>
+    :root {
+      --bg: #faf8f4;
+      --surface: #f5ede0;
+      --border: #e8d5c0;
+      --text: #2d1f0e;
+      --text-muted: #8b7355;
+      --accent: #c4863a;
+      --accent-light: #fdf0dc;
+      --accent-dark: #8b5e24;
+      --success: #5c7a4e;
+      --danger: #b54a3a;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --purple: #a855f7;
-      --purple-dark: #7c3aed;
-      --teal: #06b6d4;
-      --teal-dark: #0891b2;
-      --bg1: #0a0a1a;
-      --bg2: #1a0533;
-      --bg3: #0d1b2a;
-      --glass-bg: rgba(255,255,255,0.05);
-      --glass-border: rgba(255,255,255,0.10);
-      --glass-bg-hover: rgba(255,255,255,0.08);
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
-    }
-
-    html { scroll-behavior: smooth; }
-
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
       min-height: 100vh;
-      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
-      background-attachment: fixed;
-      color: var(--text-primary);
+      animation: fadeIn 0.5s ease;
     }
 
-    /* Background orbs */
-    .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-    .orb {
-      position: absolute; border-radius: 50%;
-      filter: blur(60px);
-    }
-    .orb-1 {
-      top: -10%; left: -5%; width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(168,85,247,0.12), transparent 70%);
-      animation: orbFloat 10s ease-in-out infinite;
-    }
-    .orb-2 {
-      bottom: -10%; right: -5%; width: 450px; height: 450px;
-      background: radial-gradient(circle, rgba(6,182,212,0.10), transparent 70%);
-      animation: orbFloat 12s ease-in-out infinite reverse;
-    }
-    .orb-3 {
-      top: 40%; left: 50%; transform: translate(-50%,-50%);
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(168,85,247,0.06), transparent 70%);
-      animation: orbFloat 8s ease-in-out infinite;
-    }
-    @keyframes orbFloat {
-      0%, 100% { transform: translate(0,0); }
-      33% { transform: translate(20px,-15px); }
-      66% { transform: translate(-15px, 20px); }
-    }
-    .orb-3 { animation: orbFloat3 8s ease-in-out infinite; }
-    @keyframes orbFloat3 {
-      0%, 100% { transform: translate(-50%,-50%); }
-      33% { transform: translate(calc(-50% + 20px), calc(-50% - 15px)); }
-      66% { transform: translate(calc(-50% - 15px), calc(-50% + 20px)); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Navbar */
-    .navbar {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,26,0.75);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
+    /* ── Navbar ── */
+    nav {
+      background: #fff;
+      border-bottom: 2px solid var(--accent);
       padding: 0 2rem;
       height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-    }
-    .navbar::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(168,85,247,0.4), rgba(6,182,212,0.4), transparent);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
     .nav-brand {
-      display: flex; align-items: center; gap: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
       text-decoration: none;
     }
-    .nav-logo {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--purple), var(--teal));
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; color: #fff;
-      box-shadow: 0 0 15px rgba(168,85,247,0.4);
+    .nav-brand-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 1rem;
     }
-    .nav-title {
-      font-size: 1.1rem; font-weight: 800;
-      background: linear-gradient(90deg, var(--purple), var(--teal));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .nav-brand span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
     }
-    .nav-actions { display: flex; align-items: center; gap: 1rem; }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
     .nav-user {
-      display: flex; align-items: center; gap: 0.5rem;
-      color: var(--text-secondary); font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .nav-user strong {
+      color: var(--text);
+      font-weight: 600;
     }
     .nav-avatar {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      width: 32px;
+      height: 32px;
+      background: var(--accent-light);
+      border: 1px solid var(--border);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem; font-weight: 700; color: #fff;
-      box-shadow: 0 0 10px rgba(168,85,247,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 0.9rem;
     }
     .btn-logout {
-      display: flex; align-items: center; gap: 0.4rem;
-      padding: 0.45rem 1rem;
-      background: rgba(248,113,113,0.1);
-      border: 1px solid rgba(248,113,113,0.25);
-      border-radius: 8px;
-      color: #f87171;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.8rem; font-weight: 600;
-      cursor: pointer; text-decoration: none;
-      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.42rem 1rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--text-muted);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
     }
     .btn-logout:hover {
-      background: rgba(248,113,113,0.2);
-      box-shadow: 0 0 15px rgba(248,113,113,0.3);
+      border-color: var(--danger);
+      color: var(--danger);
     }
 
-    /* Main content */
+    /* ── Main layout ── */
     main {
-      position: relative; z-index: 1;
-      max-width: 1200px;
+      max-width: 1040px;
       margin: 0 auto;
-      padding: 2.5rem 2rem;
+      padding: 3rem 2rem 4rem;
     }
 
-    /* Hero greeting */
-    .hero {
-      margin-bottom: 3rem;
+    /* ── Page header ── */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
     }
-    .hero-eyebrow {
-      font-size: 0.75rem; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--teal); margin-bottom: 0.5rem;
-      display: flex; align-items: center; gap: 0.5rem;
+    .page-header-left {
+      border-left: 3px solid var(--accent);
+      padding-left: 1rem;
     }
-    .hero-eyebrow::before {
-      content: '';
-      width: 24px; height: 2px;
-      background: var(--teal);
-      border-radius: 2px;
-      box-shadow: 0 0 8px var(--teal);
+    .page-header-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
     }
-    .hero h1 {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      font-weight: 800;
-      line-height: 1.2;
-      color: var(--text-primary);
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.1;
       letter-spacing: -0.02em;
     }
-    .hero h1 span {
-      background: linear-gradient(90deg, var(--purple), var(--teal));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .page-header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 0.35rem;
     }
-    .hero-sub {
-      margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
     }
-    .hero-time {
-      margin-top: 0.25rem; color: var(--text-muted); font-size: 0.8rem;
+    .btn-cta:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
     }
 
-    /* Stats grid */
+    /* ── Stats grid ── */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
     }
     .stat-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 1.75rem;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      cursor: default;
-    }
-    .stat-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(168,85,247,0.4), transparent);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem 1.5rem;
+      box-shadow: 0 2px 12px rgba(196,134,58,0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
     .stat-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(168,85,247,0.3);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(168,85,247,0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(196,134,58,0.14);
     }
-    .stat-card.teal:hover {
-      border-color: rgba(6,182,212,0.3);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(6,182,212,0.15);
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
     }
-    .stat-card.teal::before {
-      background: linear-gradient(90deg, transparent, rgba(6,182,212,0.4), transparent);
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
     }
     .stat-icon {
-      width: 48px; height: 48px;
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; margin-bottom: 1rem;
-    }
-    .stat-icon.purple {
-      background: rgba(168,85,247,0.15);
-      color: var(--purple);
-      box-shadow: 0 0 20px rgba(168,85,247,0.2);
-    }
-    .stat-icon.teal {
-      background: rgba(6,182,212,0.15);
-      color: var(--teal);
-      box-shadow: 0 0 20px rgba(6,182,212,0.2);
-    }
-    .stat-value {
-      font-size: 2.5rem; font-weight: 800;
-      background: linear-gradient(90deg, var(--purple), var(--teal));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      line-height: 1; margin-bottom: 0.375rem;
-    }
-    .stat-label { color: var(--text-muted); font-size: 0.875rem; font-weight: 500; }
-    .stat-badge {
-      position: absolute; top: 1.25rem; right: 1.25rem;
-      background: rgba(52,211,153,0.15);
-      border: 1px solid rgba(52,211,153,0.25);
-      border-radius: 20px;
-      padding: 0.25rem 0.625rem;
-      font-size: 0.7rem; font-weight: 600; color: #34d399;
-      display: flex; align-items: center; gap: 0.25rem;
+      width: 40px;
+      height: 40px;
+      background: var(--accent-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
     }
 
-    /* Quick actions */
-    .section-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
-    .section-title {
-      font-size: 1.1rem; font-weight: 700; color: var(--text-primary);
-    }
-    .section-line {
-      flex: 1; height: 1px;
-      background: linear-gradient(90deg, var(--glass-border), transparent);
-      margin-left: 1rem;
-    }
-
-    .actions-grid {
+    /* ── Feature cards ── */
+    .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1.25rem;
     }
-    .action-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      padding: 1.5rem;
+    .feature-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 1.75rem;
+      box-shadow: 0 2px 12px rgba(196,134,58,0.06);
       text-decoration: none;
+      color: var(--text);
+      display: block;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(196,134,58,0.14);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 1.3rem;
+      margin-bottom: 1.25rem;
+    }
+    .feature-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .feature-desc {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .feature-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 1.2rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ── Section divider ── */
+    .section-divider {
       display: flex;
       align-items: center;
       gap: 1rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      margin-bottom: 1.5rem;
     }
-    .action-card::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(168,85,247,0.05), rgba(6,182,212,0.05));
-      opacity: 0; transition: opacity 0.3s;
+    .section-divider h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
     }
-    .action-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(168,85,247,0.3);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3), 0 0 20px rgba(168,85,247,0.1);
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
-    .action-card:hover::after { opacity: 1; }
-    .action-icon-wrap {
-      width: 52px; height: 52px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; flex-shrink: 0;
-      transition: all 0.3s ease; position: relative; z-index: 1;
-    }
-    .action-icon-wrap.purple { background: rgba(168,85,247,0.15); color: var(--purple); }
-    .action-icon-wrap.teal { background: rgba(6,182,212,0.15); color: var(--teal); }
-    .action-icon-wrap.green { background: rgba(52,211,153,0.15); color: #34d399; }
-    .action-card:hover .action-icon-wrap.purple { box-shadow: 0 0 20px rgba(168,85,247,0.4); }
-    .action-card:hover .action-icon-wrap.teal { box-shadow: 0 0 20px rgba(6,182,212,0.4); }
-    .action-card:hover .action-icon-wrap.green { box-shadow: 0 0 20px rgba(52,211,153,0.4); }
-    .action-content { position: relative; z-index: 1; }
-    .action-title { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem; }
-    .action-desc { font-size: 0.8rem; color: var(--text-muted); }
-    .action-arrow {
-      margin-left: auto; color: var(--text-muted); font-size: 1rem;
-      transition: all 0.3s; position: relative; z-index: 1;
-    }
-    .action-card:hover .action-arrow { color: var(--purple); transform: translateX(4px); }
 
-    /* Footer */
+    /* ── Footer ── */
     footer {
-      text-align: center; padding: 2rem;
-      color: var(--text-muted); font-size: 0.75rem;
-      position: relative; z-index: 1;
-    }
-
-    @media (max-width: 768px) {
-      .navbar { padding: 0 1rem; }
-      main { padding: 2rem 1rem; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 480px) {
-      .stats-grid { grid-template-columns: 1fr; }
-      .nav-user span { display: none; }
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.75rem;
+      color: #c9b89e;
+      letter-spacing: 0.06em;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
     }
   </style>
 </head>
 <body>
-  <div class="bg-orbs">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
 
-  <nav class="navbar">
+  <!-- Navbar -->
+  <nav>
     <a href="/dashboard" class="nav-brand">
-      <div class="nav-logo"><i class="bi bi-people-fill"></i></div>
-      <span class="nav-title">StellarHR</span>
+      <div class="nav-brand-icon"><i class="bi bi-flower2"></i></div>
+      <span>HanamHR</span>
     </a>
-    <div class="nav-actions">
+    <div class="nav-right">
       <div class="nav-user">
-        <div class="nav-avatar"><%= user.username.charAt(0).toUpperCase() %></div>
-        <span><%= user.username %></span>
+        <div class="nav-avatar"><i class="bi bi-person-fill"></i></div>
+        <span>Logged in as <strong><%= user.username %></strong></span>
       </div>
       <a href="/logout" class="btn-logout">
-        <i class="bi bi-power"></i> Logout
+        <i class="bi bi-box-arrow-right"></i> Sign out
       </a>
     </div>
   </nav>
 
   <main>
-    <div class="hero">
-      <div class="hero-eyebrow"><i class="bi bi-grid-fill"></i> Overview</div>
-      <h1>Welcome back, <span><%= user.username %></span> 👋</h1>
-      <p class="hero-sub">Here's what's happening with your team today.</p>
-      <p class="hero-time" id="currentTime"></p>
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="page-header-eyebrow">Overview</div>
+        <h1>Good to see you,<br /><%= user.username %></h1>
+        <p>Here's a calm look at your team today</p>
+      </div>
+      <a href="/pegawai/create" class="btn-cta">
+        <i class="bi bi-plus-lg"></i> Add Employee
+      </a>
     </div>
 
+    <!-- Stats -->
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-badge"><i class="bi bi-arrow-up-short"></i> Active</div>
-        <div class="stat-icon purple"><i class="bi bi-people-fill"></i></div>
-        <div class="stat-value"><%= total %></div>
+        <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
         <div class="stat-label">Total Employees</div>
+        <div class="stat-number"><%= total %></div>
+        <div class="stat-desc">Active in the directory</div>
       </div>
-      <div class="stat-card teal">
-        <div class="stat-icon teal"><i class="bi bi-building"></i></div>
-        <div class="stat-value">1</div>
-        <div class="stat-label">Departments</div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="bi bi-journal-text"></i></div>
+        <div class="stat-label">Managed by</div>
+        <div class="stat-number" style="font-size:1.9rem; padding-top:0.6rem;"><%= user.username %></div>
+        <div class="stat-desc">Administrator account</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="bi bi-calendar3"></i></div>
+        <div class="stat-label">System Status</div>
+        <div class="stat-number" style="font-size:2.4rem; color: var(--success); padding-top:0.3rem;">Active</div>
+        <div class="stat-desc">All systems running</div>
       </div>
     </div>
 
-    <div class="section-header">
-      <div class="section-title">Quick Actions</div>
-      <div class="section-line"></div>
+    <!-- Feature Quick Access -->
+    <div class="section-divider">
+      <h2>Quick Access</h2>
+      <div class="section-divider-line"></div>
     </div>
-
-    <div class="actions-grid">
-      <a href="/pegawai" class="action-card" id="viewEmployeesBtn">
-        <div class="action-icon-wrap purple">
-          <i class="bi bi-person-lines-fill"></i>
-        </div>
-        <div class="action-content">
-          <div class="action-title">View Employees</div>
-          <div class="action-desc">Browse and manage all employee records</div>
-        </div>
-        <i class="bi bi-arrow-right action-arrow"></i>
+    <div class="features-grid">
+      <a href="/pegawai" class="feature-card">
+        <div class="feature-icon"><i class="bi bi-person-lines-fill"></i></div>
+        <div class="feature-title">Employee Directory</div>
+        <p class="feature-desc">Browse, search, and manage all employee records with ease.</p>
+        <span class="feature-arrow">View directory <i class="bi bi-arrow-right"></i></span>
       </a>
-
-      <a href="/pegawai/create" class="action-card" id="addEmployeeBtn">
-        <div class="action-icon-wrap teal">
-          <i class="bi bi-person-plus-fill"></i>
-        </div>
-        <div class="action-content">
-          <div class="action-title">Add Employee</div>
-          <div class="action-desc">Register a new employee to the system</div>
-        </div>
-        <i class="bi bi-arrow-right action-arrow"></i>
+      <a href="/pegawai/create" class="feature-card">
+        <div class="feature-icon"><i class="bi bi-person-plus-fill"></i></div>
+        <div class="feature-title">Add New Employee</div>
+        <p class="feature-desc">Register a new team member into the HanamHR system.</p>
+        <span class="feature-arrow">Add employee <i class="bi bi-arrow-right"></i></span>
       </a>
-
-      <a href="/logout" class="action-card" id="logoutQuickBtn">
-        <div class="action-icon-wrap green">
-          <i class="bi bi-shield-check"></i>
-        </div>
-        <div class="action-content">
-          <div class="action-title">Secure Logout</div>
-          <div class="action-desc">Sign out safely from this session</div>
-        </div>
-        <i class="bi bi-arrow-right action-arrow"></i>
-      </a>
+      <div class="feature-card" style="cursor: default;">
+        <div class="feature-icon"><i class="bi bi-bar-chart-fill"></i></div>
+        <div class="feature-title">Reports & Insights</div>
+        <p class="feature-desc">Thoughtful summaries and payroll overviews — coming soon.</p>
+        <span class="feature-arrow" style="color: var(--text-muted);">Coming soon</span>
+      </div>
     </div>
   </main>
 
   <footer>
-    <p>StellarHR &copy; <%= new Date().getFullYear() %> — Employee Management System</p>
+    HanamHR &middot; 花 &middot; Warm Minimalism &middot; Employee Management
   </footer>
-
-  <script>
-    function updateTime() {
-      const el = document.getElementById('currentTime');
-      if (el) {
-        const now = new Date();
-        el.textContent = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-          + ' • ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      }
-    }
-    updateTime();
-    setInterval(updateTime, 1000);
-  </script>
 </body>
 </html>

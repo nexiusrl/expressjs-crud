@@ -1,181 +1,234 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data Pegawai — StellarHR</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <title>ClearHR — Employees</title>
+  <meta name="description" content="Browse and manage all employees in ClearHR." />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --purple: #a855f7;
-      --purple-dark: #7c3aed;
-      --teal: #06b6d4;
-      --teal-dark: #0891b2;
-      --bg1: #0a0a1a;
-      --bg2: #1a0533;
-      --bg3: #0d1b2a;
-      --glass-bg: rgba(255,255,255,0.05);
-      --glass-border: rgba(255,255,255,0.10);
-      --glass-bg-hover: rgba(255,255,255,0.08);
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
-      --error: #f87171;
-      --success: #34d399;
+      --bg: #eef2ff;
+      --blob1: #c7d2fe;
+      --blob2: #bfdbfe;
+      --blob3: #ddd6fe;
+      --glass-bg: rgba(255, 255, 255, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.9);
+      --glass-shadow: 0 8px 32px rgba(99, 102, 241, 0.12);
+      --text: #1e1b4b;
+      --text-muted: #6b7280;
+      --accent: #6366f1;
+      --accent-light: #e0e7ff;
+      --success: #059669;
+      --danger: #e11d48;
     }
 
-    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
       min-height: 100vh;
-      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
-      background-attachment: fixed;
-      color: var(--text-primary);
+      color: var(--text);
+      position: relative;
     }
 
-    .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-    .orb { position: absolute; border-radius: 50%; filter: blur(60px); }
-    .orb-1 {
-      top: -10%; left: -5%; width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(168,85,247,0.10), transparent 70%);
-      animation: orbFloat 10s ease-in-out infinite;
+    /* Blobs */
+    .blob-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
     }
-    .orb-2 {
-      bottom: -10%; right: -5%; width: 450px; height: 450px;
-      background: radial-gradient(circle, rgba(6,182,212,0.09), transparent 70%);
-      animation: orbFloat 12s ease-in-out infinite reverse;
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.65;
     }
-    @keyframes orbFloat {
-      0%, 100% { transform: translate(0,0); }
-      33% { transform: translate(20px,-15px); }
-      66% { transform: translate(-15px, 20px); }
+    .blob-1 {
+      width: 600px; height: 600px;
+      background: var(--blob1);
+      top: -200px; left: -150px;
+      animation: blobMove1 15s ease-in-out infinite;
+    }
+    .blob-2 {
+      width: 500px; height: 500px;
+      background: var(--blob2);
+      bottom: -150px; right: -100px;
+      animation: blobMove2 18s ease-in-out infinite;
+    }
+    .blob-3 {
+      width: 400px; height: 400px;
+      background: var(--blob3);
+      top: 40%; left: 55%;
+      animation: blobMove3 20s ease-in-out infinite;
+    }
+    @keyframes blobMove1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%       { transform: translate(50px, 30px) scale(1.05); }
+      66%       { transform: translate(-30px, 60px) scale(0.95); }
+    }
+    @keyframes blobMove2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%       { transform: translate(-40px, -50px) scale(1.08); }
+      66%       { transform: translate(30px, -20px) scale(0.97); }
+    }
+    @keyframes blobMove3 {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.15); }
     }
 
     /* Navbar */
     .navbar {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,26,0.75);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
-      padding: 0 2rem; height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .navbar::after {
-      content: ''; position: absolute;
-      bottom: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(168,85,247,0.4), rgba(6,182,212,0.4), transparent);
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
     }
-    .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-    .nav-logo {
+    .nav-brand-icon {
       width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--purple), var(--teal));
+      background: var(--accent);
       border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; color: #fff;
-      box-shadow: 0 0 15px rgba(168,85,247,0.4);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 16px;
     }
-    .nav-title {
-      font-size: 1.1rem; font-weight: 800;
-      background: linear-gradient(90deg, var(--purple), var(--teal));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .nav-brand-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--text);
     }
-    .nav-actions { display: flex; align-items: center; gap: 1rem; }
-    .nav-user { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-size: 0.875rem; }
-    .nav-avatar {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-light);
+      border-radius: 50px;
+      padding: 6px 14px 6px 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .user-avatar {
+      width: 28px; height: 28px;
+      background: var(--accent);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem; font-weight: 700; color: #fff;
-      box-shadow: 0 0 10px rgba(168,85,247,0.4);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 11px;
     }
     .btn-logout {
-      display: flex; align-items: center; gap: 0.4rem;
-      padding: 0.45rem 1rem;
-      background: rgba(248,113,113,0.1);
-      border: 1px solid rgba(248,113,113,0.25);
-      border-radius: 8px; color: #f87171;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.8rem; font-weight: 600;
-      cursor: pointer; text-decoration: none;
-      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: transparent;
+      border: 1.5px solid rgba(99, 102, 241, 0.3);
+      border-radius: 50px;
+      color: var(--accent);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
     }
     .btn-logout:hover {
-      background: rgba(248,113,113,0.2);
-      box-shadow: 0 0 15px rgba(248,113,113,0.3);
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
     }
 
-    main {
-      position: relative; z-index: 1;
+    /* Main content */
+    .page-content {
+      position: relative;
+      z-index: 1;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2.5rem 2rem;
+      padding: 48px 24px 64px;
     }
 
     /* Page header */
-    .page-header {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem;
-      margin-bottom: 2.5rem;
+    .page-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 32px;
     }
-    .page-eyebrow {
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--teal); margin-bottom: 0.4rem;
-      display: flex; align-items: center; gap: 0.4rem;
+    .page-top h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      color: var(--text);
+      letter-spacing: -0.5px;
     }
-    .page-eyebrow::before {
-      content: ''; width: 20px; height: 2px;
-      background: var(--teal); border-radius: 2px; box-shadow: 0 0 6px var(--teal);
+    .page-top p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
     }
-    .page-title { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; }
-    .page-sub { color: var(--text-muted); font-size: 0.875rem; margin-top: 0.25rem; }
+    .badge-total {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 50px;
+      padding: 4px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
 
     .btn-add {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
-      border: none; border-radius: 12px;
-      color: #fff; font-family: 'Inter', sans-serif;
-      font-size: 0.875rem; font-weight: 600;
-      cursor: pointer; text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(168,85,247,0.35);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--accent);
+      border: none;
+      border-radius: 50px;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
       white-space: nowrap;
     }
     .btn-add:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(168,85,247,0.55), 0 0 40px rgba(168,85,247,0.15);
-    }
-    .btn-add:active { transform: translateY(0); }
-
-    /* Search bar */
-    .search-bar-wrap { margin-bottom: 1.5rem; }
-    .search-inner { position: relative; max-width: 420px; }
-    .search-icon {
-      position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
-      color: var(--text-muted); font-size: 1rem; pointer-events: none;
-    }
-    .search-input {
-      width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      color: var(--text-primary);
-      font-family: 'Inter', sans-serif; font-size: 0.875rem;
-      outline: none; transition: all 0.3s;
-    }
-    .search-input::placeholder { color: var(--text-muted); }
-    .search-input:focus {
-      border-color: var(--teal);
-      background: rgba(6,182,212,0.05);
-      box-shadow: 0 0 0 3px rgba(6,182,212,0.12);
+      background: #4f46e5;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
     }
 
     /* Table card */
@@ -185,336 +238,242 @@
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
+      box-shadow: var(--glass-shadow);
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .table-card::before {
-      content: ''; display: block; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(168,85,247,0.5), rgba(6,182,212,0.5), transparent);
+    .table-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(99, 102, 241, 0.16);
     }
 
-    table { width: 100%; border-collapse: collapse; }
+    .table-responsive { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
     thead tr {
-      background: rgba(168,85,247,0.08);
-      border-bottom: 1px solid var(--glass-border);
+      background: rgba(99, 102, 241, 0.08);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.12);
     }
     thead th {
-      padding: 1rem 1.25rem;
+      padding: 14px 20px;
       text-align: left;
-      font-size: 0.7rem; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--text-muted);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
     }
     tbody tr {
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      transition: all 0.2s ease;
+      border-bottom: 1px solid rgba(99, 102, 241, 0.06);
+      transition: background 0.15s;
     }
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: var(--glass-bg-hover); }
-    tbody td { padding: 1rem 1.25rem; font-size: 0.875rem; color: var(--text-secondary); vertical-align: middle; }
+    tbody tr:hover { background: rgba(99, 102, 241, 0.04); }
+    tbody td {
+      padding: 16px 20px;
+      font-size: 0.88rem;
+      color: var(--text);
+      vertical-align: middle;
+    }
 
+    .row-num {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
     .employee-name {
-      font-weight: 600; color: var(--text-primary);
-      display: flex; align-items: center; gap: 0.625rem;
+      font-weight: 600;
+      color: var(--text);
     }
-    .employee-avatar {
-      width: 34px; height: 34px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 700; color: #fff; flex-shrink: 0;
+    .position-badge {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 50px;
+      padding: 3px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
     }
-    .avatar-purple { background: linear-gradient(135deg, var(--purple-dark), var(--purple)); box-shadow: 0 0 10px rgba(168,85,247,0.3); }
-    .avatar-teal { background: linear-gradient(135deg, var(--teal-dark), var(--teal)); box-shadow: 0 0 10px rgba(6,182,212,0.3); }
-
-    .badge-posisi {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      padding: 0.25rem 0.75rem;
-      background: rgba(168,85,247,0.12);
-      border: 1px solid rgba(168,85,247,0.25);
-      border-radius: 20px;
-      font-size: 0.75rem; font-weight: 600; color: var(--purple);
+    .salary-val {
+      font-weight: 600;
+      color: var(--success);
+      font-family: 'Syne', sans-serif;
+    }
+    .address-val {
+      color: var(--text-muted);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    .salary-text { font-family: 'Inter', sans-serif; font-weight: 600; color: var(--success); }
-
-    .address-text { max-width: 180px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    .actions-cell { display: flex; align-items: center; gap: 0.5rem; }
-    .btn-action {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      padding: 0.4rem 0.875rem;
-      border-radius: 8px; font-family: 'Inter', sans-serif;
-      font-size: 0.78rem; font-weight: 600;
-      cursor: pointer; text-decoration: none;
-      border: 1px solid; transition: all 0.3s ease; white-space: nowrap;
+    /* Action buttons in table */
+    .actions-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .btn-edit {
-      background: rgba(6,182,212,0.1);
-      border-color: rgba(6,182,212,0.25); color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid transparent;
+      border-radius: 50px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .btn-edit:hover { background: rgba(6,182,212,0.2); box-shadow: 0 0 15px rgba(6,182,212,0.3); }
+    .btn-edit:hover {
+      background: var(--accent);
+      color: #fff;
+    }
     .btn-delete {
-      background: rgba(248,113,113,0.1);
-      border-color: rgba(248,113,113,0.25); color: #f87171;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      background: rgba(225, 29, 72, 0.08);
+      color: var(--danger);
+      border: 1px solid transparent;
+      border-radius: 50px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .btn-delete:hover { background: rgba(248,113,113,0.2); box-shadow: 0 0 15px rgba(248,113,113,0.3); }
+    .btn-delete:hover {
+      background: var(--danger);
+      color: #fff;
+    }
 
     /* Empty state */
     .empty-state {
-      text-align: center; padding: 4rem 2rem;
+      text-align: center;
+      padding: 64px 24px;
+      color: var(--text-muted);
     }
     .empty-icon {
-      font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;
-      opacity: 0.5;
+      font-size: 3rem;
+      color: rgba(99, 102, 241, 0.3);
+      margin-bottom: 16px;
     }
-    .empty-title { font-size: 1.1rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; }
-    .empty-sub { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem; }
-
-    /* Pagination / count */
-    .table-footer {
-      padding: 1rem 1.25rem;
-      border-top: 1px solid var(--glass-border);
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: 0.8rem; color: var(--text-muted);
-      flex-wrap: wrap; gap: 0.5rem;
-    }
-    .count-badge {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      background: rgba(168,85,247,0.1);
-      border: 1px solid rgba(168,85,247,0.2);
-      border-radius: 20px; padding: 0.2rem 0.75rem;
-      font-size: 0.75rem; color: var(--purple); font-weight: 600;
-    }
-
-    /* Delete modal */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s;
-    }
-    .modal-overlay.show { opacity: 1; pointer-events: all; }
-    .modal-box {
-      background: rgba(10,10,26,0.95);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px; padding: 2rem;
-      max-width: 380px; width: 90%;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-      transform: scale(0.9); transition: transform 0.3s;
-      position: relative;
-    }
-    .modal-overlay.show .modal-box { transform: scale(1); }
-    .modal-icon {
-      width: 56px; height: 56px; border-radius: 16px;
-      background: rgba(248,113,113,0.15);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; color: #f87171;
-      margin: 0 auto 1.25rem;
-      box-shadow: 0 0 20px rgba(248,113,113,0.2);
-    }
-    .modal-title { text-align: center; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
-    .modal-body { text-align: center; color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem; }
-    .modal-body strong { color: var(--text-secondary); }
-    .modal-actions { display: flex; gap: 0.75rem; }
-    .modal-cancel {
-      flex: 1; padding: 0.75rem;
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      border-radius: 10px; color: var(--text-secondary);
-      font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 600;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .modal-cancel:hover { background: var(--glass-bg-hover); }
-    .modal-confirm {
-      flex: 1; padding: 0.75rem;
-      background: linear-gradient(135deg, #dc2626, #f87171);
-      border: none; border-radius: 10px; color: #fff;
-      font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 600;
-      cursor: pointer; transition: all 0.2s;
-      box-shadow: 0 4px 15px rgba(220,38,38,0.4);
-    }
-    .modal-confirm:hover { box-shadow: 0 6px 25px rgba(220,38,38,0.6); transform: translateY(-1px); }
-
-    footer {
-      text-align: center; padding: 2rem;
-      color: var(--text-muted); font-size: 0.75rem;
-      position: relative; z-index: 1;
-    }
-
-    @media (max-width: 900px) {
-      .address-text { max-width: 120px; }
-    }
-    @media (max-width: 768px) {
-      .navbar { padding: 0 1rem; }
-      main { padding: 2rem 1rem; }
-      .page-header { flex-direction: column; }
-      thead th:nth-child(4), tbody td:nth-child(4) { display: none; }
-    }
-    @media (max-width: 480px) {
-      thead th:nth-child(3), tbody td:nth-child(3) { display: none; }
-      .nav-user span { display: none; }
+    .empty-state h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
-  <div class="bg-orbs">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
+
+  <div class="blob-wrap">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <!-- Delete Confirmation Modal -->
-  <div class="modal-overlay" id="deleteModal">
-    <div class="modal-box">
-      <div class="modal-icon"><i class="bi bi-person-x-fill"></i></div>
-      <div class="modal-title">Delete Employee?</div>
-      <div class="modal-body">You are about to delete <strong id="deleteNameDisplay"></strong>. This action cannot be undone.</div>
-      <div class="modal-actions">
-        <button class="modal-cancel" id="modalCancel">Cancel</button>
-        <form id="deleteForm" method="POST" style="flex:1">
-          <button type="submit" class="modal-confirm" style="width:100%">
-            <i class="bi bi-trash3"></i> Delete
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-
+  <!-- Navbar -->
   <nav class="navbar">
     <a href="/dashboard" class="nav-brand">
-      <div class="nav-logo"><i class="bi bi-people-fill"></i></div>
-      <span class="nav-title">StellarHR</span>
+      <div class="nav-brand-icon"><i class="bi bi-people-fill"></i></div>
+      <span class="nav-brand-name">ClearHR</span>
     </a>
-    <div class="nav-actions">
-      <div class="nav-user">
-        <div class="nav-avatar"><%= user.username.charAt(0).toUpperCase() %></div>
-        <span><%= user.username %></span>
+    <div class="nav-right">
+      <div class="user-chip">
+        <div class="user-avatar"><i class="bi bi-person-fill"></i></div>
+        <%= user.username %>
       </div>
-      <a href="/logout" class="btn-logout"><i class="bi bi-power"></i> Logout</a>
+      <a href="/logout" class="btn-logout">
+        <i class="bi bi-box-arrow-right"></i>
+        Logout
+      </a>
     </div>
   </nav>
 
-  <main>
-    <div class="page-header">
+  <main class="page-content">
+
+    <div class="page-top">
       <div>
-        <div class="page-eyebrow"><i class="bi bi-person-lines-fill"></i> Management</div>
-        <h1 class="page-title">Employee Records</h1>
-        <p class="page-sub">Manage all your employee data in one place</p>
+        <h1>
+          Employees
+          <span class="badge-total">
+            <i class="bi bi-people-fill"></i>
+            <%= pegawai.length %>
+          </span>
+        </h1>
+        <p>All registered employees in the system.</p>
       </div>
-      <a href="/pegawai/create" class="btn-add" id="addNewEmployeeBtn">
-        <i class="bi bi-plus-lg"></i> Add Employee
+      <a href="/pegawai/create" class="btn-add">
+        <i class="bi bi-person-plus-fill"></i>
+        Add Employee
       </a>
     </div>
 
-    <div class="search-bar-wrap">
-      <div class="search-inner">
-        <i class="bi bi-search search-icon"></i>
-        <input type="text" class="search-input" id="searchInput" placeholder="Search by name, position, or address..." />
-      </div>
-    </div>
-
     <div class="table-card">
-      <% if (pegawai && pegawai.length > 0) { %>
-      <table id="pegawaiTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Employee</th>
-            <th>Position</th>
-            <th>Salary</th>
-            <th>Address</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody">
-          <% pegawai.forEach((p, index) => { %>
-          <tr>
-            <td><%= index + 1 %></td>
-            <td>
-              <div class="employee-name">
-                <div class="employee-avatar <%= index % 2 === 0 ? 'avatar-purple' : 'avatar-teal' %>">
-                  <%= p.nama ? p.nama.charAt(0).toUpperCase() : '?' %>
-                </div>
-                <%= p.nama %>
-              </div>
-            </td>
-            <td><span class="badge-posisi"><i class="bi bi-briefcase-fill"></i><%= p.posisi %></span></td>
-            <td class="salary-text">Rp <%= Number(p.gaji).toLocaleString('id-ID') %></td>
-            <td><span class="address-text" title="<%= p.alamat %>"><%= p.alamat %></span></td>
-            <td>
-              <div class="actions-cell">
-                <a href="/pegawai/edit/<%= p.id %>" class="btn-action btn-edit" id="editBtn-<%= p.id %>">
-                  <i class="bi bi-pencil-square"></i> Edit
-                </a>
-                <button
-                  class="btn-action btn-delete"
-                  id="deleteBtn-<%= p.id %>"
-                  onclick="confirmDelete(<%= p.id %>, '<%= p.nama.replace(/'/g, "\\'") %>')"
-                >
-                  <i class="bi bi-trash3"></i> Delete
-                </button>
-              </div>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <div class="table-footer">
-        <span class="count-badge"><i class="bi bi-people-fill"></i> <span id="countDisplay"><%= pegawai.length %></span> employees</span>
-        <span>Last updated: <span id="lastUpdate"></span></span>
+      <% if (pegawai.length === 0) { %>
+      <div class="empty-state">
+        <div class="empty-icon"><i class="bi bi-people"></i></div>
+        <h3>No employees yet</h3>
+        <p>Get started by adding your first team member.</p>
       </div>
       <% } else { %>
-      <div class="empty-state">
-        <div class="empty-icon"><i class="bi bi-person-slash"></i></div>
-        <div class="empty-title">No Employees Found</div>
-        <div class="empty-sub">Start by adding your first employee record</div>
-        <a href="/pegawai/create" class="btn-add" style="display:inline-flex">
-          <i class="bi bi-plus-lg"></i> Add First Employee
-        </a>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Salary (IDR)</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% pegawai.forEach((p, i) => { %>
+            <tr>
+              <td class="row-num"><%= i + 1 %></td>
+              <td class="employee-name"><%= p.nama %></td>
+              <td><span class="position-badge"><%= p.posisi %></span></td>
+              <td class="salary-val">Rp <%= Number(p.gaji).toLocaleString('id-ID') %></td>
+              <td class="address-val" title="<%= p.alamat %>"><%= p.alamat %></td>
+              <td>
+                <div class="actions-cell">
+                  <a href="/pegawai/edit/<%= p.id %>" class="btn-edit">
+                    <i class="bi bi-pencil-fill"></i>
+                    Edit
+                  </a>
+                  <form action="/pegawai/delete/<%= p.id %>" method="POST" style="margin:0;" onsubmit="return confirm('Delete <%= p.nama %>?')">
+                    <button type="submit" class="btn-delete">
+                      <i class="bi bi-trash-fill"></i>
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
       </div>
       <% } %>
     </div>
+
   </main>
 
-  <footer><p>StellarHR &copy; <%= new Date().getFullYear() %> — Employee Management System</p></footer>
-
-  <script>
-    // Live search
-    const searchInput = document.getElementById('searchInput');
-    const tableBody = document.getElementById('tableBody');
-    const countDisplay = document.getElementById('countDisplay');
-    if (searchInput && tableBody) {
-      searchInput.addEventListener('input', () => {
-        const q = searchInput.value.toLowerCase();
-        const rows = tableBody.querySelectorAll('tr');
-        let visible = 0;
-        rows.forEach(row => {
-          const text = row.textContent.toLowerCase();
-          const show = text.includes(q);
-          row.style.display = show ? '' : 'none';
-          if (show) visible++;
-        });
-        if (countDisplay) countDisplay.textContent = visible;
-      });
-    }
-
-    // Last update time
-    const lu = document.getElementById('lastUpdate');
-    if (lu) {
-      lu.textContent = new Date().toLocaleTimeString('id-ID');
-    }
-
-    // Delete modal
-    function confirmDelete(id, name) {
-      document.getElementById('deleteNameDisplay').textContent = name;
-      document.getElementById('deleteForm').action = '/pegawai/delete/' + id;
-      document.getElementById('deleteModal').classList.add('show');
-    }
-    document.getElementById('modalCancel').addEventListener('click', () => {
-      document.getElementById('deleteModal').classList.remove('show');
-    });
-    document.getElementById('deleteModal').addEventListener('click', (e) => {
-      if (e.target === e.currentTarget) e.currentTarget.classList.remove('show');
-    });
-  </script>
 </body>
 </html>
