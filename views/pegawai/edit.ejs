@@ -1,46 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HanamHR — Edit Employee</title>
-  <meta name="description" content="Edit employee information in the HanamHR directory." />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <title>Edit Pegawai — PegawaiHub</title>
+  <meta name="description" content="Edit data pegawai di sistem PegawaiHub." />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <style>
     :root {
-      --bg: #faf8f4;
-      --surface: #f5ede0;
-      --border: #e8d5c0;
-      --text: #2d1f0e;
-      --text-muted: #8b7355;
-      --accent: #c4863a;
-      --accent-light: #fdf0dc;
-      --accent-dark: #8b5e24;
-      --success: #5c7a4e;
-      --danger: #b54a3a;
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --success: #16a34a;
+      --danger: #dc2626;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Nunito', sans-serif;
-      background-color: var(--bg);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      background: var(--surface);
       color: var(--text);
       min-height: 100vh;
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ── Navbar ── */
-    nav {
-      background: #fff;
-      border-bottom: 2px solid var(--accent);
-      padding: 0 2rem;
+    .navbar {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      padding: 0 40px;
       height: 64px;
       display: flex;
       align-items: center;
@@ -49,465 +44,499 @@
       top: 0;
       z-index: 100;
     }
+
     .nav-brand {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 12px;
       text-decoration: none;
     }
-    .nav-brand-icon {
+
+    .brand-icon {
       width: 36px;
       height: 36px;
-      background: var(--accent-light);
-      border: 1px solid var(--border);
-      border-radius: 50%;
+      background: var(--accent);
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent);
+      color: #fff;
       font-size: 1rem;
     }
-    .nav-brand span {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.65rem;
+
+    .brand-name {
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
+      font-size: 1.15rem;
       color: var(--text);
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
     }
-    .nav-links {
+
+    .btn-back {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
-    }
-    .nav-link {
+      gap: 6px;
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Outfit', sans-serif;
       font-size: 0.85rem;
       font-weight: 500;
       color: var(--text-muted);
       text-decoration: none;
-      position: relative;
-    }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: var(--accent);
-      transition: width 0.25s ease;
-    }
-    .nav-link:hover { color: var(--text); }
-    .nav-link:hover::after { width: 100%; }
-    .btn-logout {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.42rem 1rem;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      color: var(--text-muted);
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
       transition: border-color 0.2s, color 0.2s;
     }
-    .btn-logout:hover { border-color: var(--danger); color: var(--danger); }
+
+    .btn-back:hover { border-color: var(--accent); color: var(--accent); }
 
     /* ── Main ── */
-    main {
-      max-width: 680px;
+    .main {
+      max-width: 860px;
       margin: 0 auto;
-      padding: 3rem 2rem 4rem;
+      padding: 48px 40px;
+      animation: slideUp 0.5s ease both;
     }
 
-    /* ── Breadcrumb ── */
-    .breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-    }
-    .breadcrumb a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .breadcrumb a:hover { color: var(--accent); }
-    .breadcrumb i { font-size: 0.65rem; }
-
-    /* ── Employee identity banner ── */
-    .emp-banner {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-      background: var(--accent-light);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 1.75rem;
-    }
-    .emp-avatar-lg {
-      width: 56px;
-      height: 56px;
-      background: #fff;
-      border: 2px solid var(--border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem;
-      font-weight: 700;
-      color: var(--accent);
-      flex-shrink: 0;
-    }
-    .emp-banner-info {}
-    .emp-banner-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .emp-banner-meta {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 0.15rem;
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Page header ── */
+    /* ── Page Header ── */
     .page-header {
-      border-left: 3px solid var(--accent);
-      padding-left: 1rem;
-      margin-bottom: 2rem;
-    }
-    .page-header-eyebrow {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.3rem;
-    }
-    .page-header h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
-    .page-header p { color: var(--text-muted); font-size: 0.88rem; margin-top: 0.3rem; }
-
-    /* ── Form Card ── */
-    .form-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2.25rem 2rem;
-      box-shadow: 0 2px 16px rgba(196,134,58,0.07);
-    }
-
-    .section-label {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.6rem;
+      margin-bottom: 36px;
+      padding-bottom: 28px;
       border-bottom: 1px solid var(--border);
     }
 
-    .form-grid {
+    .page-header .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .page-header .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .page-header .breadcrumb a:hover { text-decoration: underline; }
+    .page-header .breadcrumb i { font-size: 0.65rem; }
+
+    .header-main {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .employee-avatar {
+      width: 64px;
+      height: 64px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .header-info h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .header-info .sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .id-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ── Form Card ── */
+    .form-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .form-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .form-card-header .card-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+
+    .form-card-header .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .form-card-header .card-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .form-body {
+      padding: 32px 28px;
+    }
+
+    .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.2rem 1.5rem;
+      gap: 20px;
     }
-    .form-group { margin-bottom: 0; }
-    .form-group.full { grid-column: 1 / -1; }
 
-    label {
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 0.5rem;
+      margin-bottom: 8px;
     }
 
-    .input-wrap { position: relative; }
+    .input-wrap {
+      position: relative;
+    }
+
     .input-wrap i {
       position: absolute;
       left: 14px;
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-muted);
-      font-size: 0.95rem;
-      pointer-events: none;
-    }
-    .textarea-wrap i {
-      position: absolute;
-      left: 14px;
-      top: 14px;
-      color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       pointer-events: none;
     }
 
-    input[type="text"],
-    input[type="number"],
-    textarea {
+    .form-control {
       width: 100%;
-      padding: 0.72rem 1rem 0.72rem 2.6rem;
-      background: #fdf9f4;
+      padding: 12px 14px 12px 40px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.92rem;
+      border-radius: 6px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
       color: var(--text);
+      background: var(--bg);
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    textarea {
-      resize: vertical;
-      min-height: 90px;
-      padding-top: 0.72rem;
-      line-height: 1.5;
-    }
-    input:focus, textarea:focus {
+
+    .form-control:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(196,134,58,0.12);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
     }
-    input::placeholder, textarea::placeholder { color: #c9b89e; }
 
-    /* Salary prefix */
-    .salary-prefix-wrap {
-      position: relative;
+    textarea.form-control {
+      padding-top: 12px;
+      resize: vertical;
+      min-height: 100px;
     }
-    .salary-prefix-wrap .prefix {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.78rem;
-      font-weight: 600;
+
+    .form-hint {
+      font-size: 0.75rem;
       color: var(--text-muted);
-      pointer-events: none;
-    }
-    .salary-prefix-wrap input {
-      padding-left: 3.5rem;
+      margin-top: 6px;
     }
 
-    /* ── Danger zone ── */
-    .danger-zone {
-      margin-top: 1.75rem;
-      padding: 1.25rem 1.5rem;
-      border: 1px dashed #e8b5b0;
-      border-radius: 10px;
-      background: #fff9f8;
+    .form-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 24px;
     }
-    .danger-zone-title {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--danger);
-      margin-bottom: 0.5rem;
-    }
-    .danger-zone p {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-    }
-    .btn-delete {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.5rem 1.1rem;
-      background: transparent;
-      border: 1px solid var(--danger);
-      border-radius: 8px;
-      color: var(--danger);
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .btn-delete:hover { background: #fae8e6; }
 
-    /* ── Form actions ── */
     .form-actions {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      gap: 0.75rem;
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
+      gap: 12px;
+      padding-top: 8px;
     }
-    .btn-cancel {
+
+    .btn-primary {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.65rem 1.35rem;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      color: var(--text-muted);
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.86rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-cancel:hover { border-color: var(--text-muted); color: var(--text); }
-    .btn-save {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.65rem 1.5rem;
+      gap: 8px;
+      padding: 13px 28px;
       background: var(--accent);
       color: #fff;
       border: none;
-      border-radius: 50px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.86rem;
+      border-radius: 6px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s, transform 0.15s;
     }
-    .btn-save:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+    .btn-cancel {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 24px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-cancel:hover { border-color: var(--text-muted); color: var(--text); }
+
+    /* ── Danger Zone ── */
+    .danger-card {
+      background: var(--bg);
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .danger-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 24px;
+      border-bottom: 1px solid #fecaca;
+      background: #fef2f2;
+    }
+
+    .danger-header i {
+      color: var(--danger);
+      font-size: 1rem;
+    }
+
+    .danger-header span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--danger);
+      letter-spacing: 0.03em;
+    }
+
+    .danger-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+    }
+
+    .danger-body p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      max-width: 440px;
+    }
+
+    .btn-danger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-danger:hover { background: #b91c1c; transform: translateY(-1px); }
 
     /* ── Footer ── */
-    footer {
+    .page-footer {
       text-align: center;
-      padding: 1.5rem 2rem;
-      font-size: 0.75rem;
-      color: #c9b89e;
-      letter-spacing: 0.06em;
-      border-top: 1px solid var(--border);
-      margin-top: 2rem;
+      margin-top: 48px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 640px) {
+      .navbar { padding: 0 20px; }
+      .main { padding: 32px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-body { padding: 24px 20px; }
+      .danger-body { flex-direction: column; align-items: flex-start; gap: 14px; }
     }
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
-  <nav>
+  <nav class="navbar">
     <a href="/dashboard" class="nav-brand">
-      <div class="nav-brand-icon"><i class="bi bi-flower2"></i></div>
-      <span>HanamHR</span>
+      <div class="brand-icon"><i class="bi bi-people-fill"></i></div>
+      <span class="brand-name">PegawaiHub</span>
     </a>
-    <div class="nav-links">
-      <a href="/dashboard" class="nav-link">Dashboard</a>
-      <a href="/pegawai" class="nav-link">Employees</a>
-    </div>
-    <a href="/logout" class="btn-logout"><i class="bi bi-box-arrow-right"></i> Sign out</a>
+    <a href="/pegawai" class="btn-back">
+      <i class="bi bi-arrow-left"></i> Kembali
+    </a>
   </nav>
 
-  <main>
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-      <a href="/dashboard">Dashboard</a>
-      <i class="bi bi-chevron-right"></i>
-      <a href="/pegawai">Employees</a>
-      <i class="bi bi-chevron-right"></i>
-      <span>Edit &mdash; <%= pegawai.nama %></span>
-    </div>
+  <!-- Main -->
+  <main class="main">
 
-    <!-- Employee identity banner -->
-    <div class="emp-banner">
-      <div class="emp-avatar-lg"><%= pegawai.nama.charAt(0).toUpperCase() %></div>
-      <div class="emp-banner-info">
-        <div class="emp-banner-name"><%= pegawai.nama %></div>
-        <div class="emp-banner-meta">
-          <i class="bi bi-briefcase" style="font-size:0.75rem;"></i> <%= pegawai.posisi %>
-          &ensp;&middot;&ensp;
-          <i class="bi bi-hash" style="font-size:0.75rem;"></i> ID <%= pegawai.id %>
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="/dashboard">Dashboard</a>
+        <i class="bi bi-chevron-right"></i>
+        <a href="/pegawai">Pegawai</a>
+        <i class="bi bi-chevron-right"></i>
+        <span>Edit</span>
+      </div>
+      <div class="header-main">
+        <div class="employee-avatar"><%= pegawai.nama.charAt(0).toUpperCase() %></div>
+        <div class="header-info">
+          <h1>Edit: <%= pegawai.nama %></h1>
+          <p class="sub">Perbarui informasi pegawai di bawah ini</p>
+          <div class="id-badge">
+            <i class="bi bi-hash"></i> ID: <%= pegawai.id %>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Page header -->
-    <div class="page-header">
-      <div class="page-header-eyebrow">Update Record</div>
-      <h1>Edit Employee</h1>
-      <p>Modify the details for this team member</p>
-    </div>
-
-    <!-- Form card -->
+    <!-- Form Card -->
     <div class="form-card">
-      <p class="section-label">Employee Information</p>
-      <form action="/pegawai/edit/<%= pegawai.id %>" method="POST" id="editForm">
-        <div class="form-grid">
-
-          <div class="form-group full">
-            <label for="nama">Full Name</label>
-            <div class="input-wrap">
-              <i class="bi bi-person"></i>
-              <input type="text" id="nama" name="nama" value="<%= pegawai.nama %>" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="posisi">Position</label>
-            <div class="input-wrap">
-              <i class="bi bi-briefcase"></i>
-              <input type="text" id="posisi" name="posisi" value="<%= pegawai.posisi %>" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="gaji">Monthly Salary</label>
-            <div class="salary-prefix-wrap input-wrap">
-              <span class="prefix">Rp</span>
-              <input type="number" id="gaji" name="gaji" value="<%= pegawai.gaji %>" min="0" required />
-            </div>
-          </div>
-
-          <div class="form-group full">
-            <label for="alamat">Address</label>
-            <div class="textarea-wrap input-wrap">
-              <i class="bi bi-geo-alt"></i>
-              <textarea id="alamat" name="alamat" required><%= pegawai.alamat %></textarea>
-            </div>
-          </div>
-
+      <div class="form-card-header">
+        <div class="card-icon"><i class="bi bi-pencil-fill"></i></div>
+        <div>
+          <div class="card-title">Informasi Pegawai</div>
+          <div class="card-sub">Edit data yang ingin diperbarui</div>
         </div>
+      </div>
 
-        <div class="form-actions">
-          <a href="/pegawai" class="btn-cancel">
-            <i class="bi bi-x-lg"></i> Cancel
-          </a>
-          <button type="submit" class="btn-save">
-            <i class="bi bi-check-lg"></i> Update Employee
+      <div class="form-body">
+        <form action="/pegawai/edit/<%= pegawai.id %>" method="POST" id="edit-employee-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nama">Nama Lengkap</label>
+              <div class="input-wrap">
+                <i class="bi bi-person"></i>
+                <input type="text" id="nama" name="nama" class="form-control" value="<%= pegawai.nama %>" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="posisi">Posisi / Jabatan</label>
+              <div class="input-wrap">
+                <i class="bi bi-briefcase"></i>
+                <input type="text" id="posisi" name="posisi" class="form-control" value="<%= pegawai.posisi %>" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="gaji">Gaji (IDR)</label>
+            <div class="input-wrap">
+              <i class="bi bi-currency-exchange"></i>
+              <input type="number" id="gaji" name="gaji" class="form-control" value="<%= pegawai.gaji %>" min="0" step="100000" required />
+            </div>
+            <div class="form-hint">Masukkan nominal gaji dalam rupiah (tanpa titik/koma)</div>
+          </div>
+
+          <div class="form-divider"></div>
+
+          <div class="form-group">
+            <label for="alamat">Alamat Lengkap</label>
+            <div class="input-wrap">
+              <i class="bi bi-geo-alt" style="top:20px;transform:none;"></i>
+              <textarea id="alamat" name="alamat" class="form-control" required><%= pegawai.alamat %></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">
+              <i class="bi bi-check-lg"></i> Simpan Perubahan
+            </button>
+            <a href="/pegawai" class="btn-cancel">
+              <i class="bi bi-x"></i> Batal
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="danger-card">
+      <div class="danger-header">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>Danger Zone</span>
+      </div>
+      <div class="danger-body">
+        <p>Menghapus pegawai ini akan menghapus semua data terkait secara permanen dan tidak dapat dikembalikan.</p>
+        <form action="/pegawai/delete/<%= pegawai.id %>" method="POST" id="delete-from-edit-form">
+          <button type="submit" class="btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus pegawai ini? Tindakan ini tidak dapat dibatalkan.')">
+            <i class="bi bi-trash3-fill"></i> Hapus Pegawai
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
 
-    <!-- Danger zone -->
-    <div class="danger-zone">
-      <p class="danger-zone-title"><i class="bi bi-exclamation-triangle"></i> Danger Zone</p>
-      <p>Permanently remove this employee from the directory. This action cannot be undone.</p>
-      <form action="/pegawai/delete/<%= pegawai.id %>" method="POST" onsubmit="return confirm('Permanently delete <%= pegawai.nama %>? This cannot be undone.')">
-        <button type="submit" class="btn-delete">
-          <i class="bi bi-trash"></i> Delete Employee
-        </button>
-      </form>
+    <!-- Footer -->
+    <div class="page-footer">
+      © <%= new Date().getFullYear() %> PegawaiHub — Swiss Precision Employee Management
     </div>
+
   </main>
 
-  <footer>
-    HanamHR &middot; 花 &middot; &copy; <%= new Date().getFullYear() %> &middot; Warm Minimalism
-  </footer>
 </body>
 </html>
